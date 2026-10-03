@@ -1,0 +1,189 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    /* Over Distortion Brand Colors */
+    --color-punk-black: #0d0d0d;
+    --color-punk-dark: #141414;
+    --color-punk-charcoal: #1a1a1a;
+    --color-punk-gray: #2a2a2a;
+    --color-punk-muted: #3d3d3d;
+    --color-punk-red: #e11d48;
+    --color-punk-red-dark: #9f1239;
+    --color-punk-red-light: #fb7185;
+    --color-punk-green: #10b981;
+    --color-punk-green-dark: #064e3b;
+    --color-punk-green-light: #34d399;
+    --color-punk-gold: #d97706;
+    --color-punk-cream: #f5f0e8;
+
+    /* Typography */
+    --font-sans: 'Oswald', 'Impact', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Courier New', ui-monospace, monospace;
+}
+
+/* Base overrides */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d0d0d;
+    color: #f5f0e8;
+    font-family: var(--font-body);
+}
+
+/* Punk noise/grain texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+}
+
+/* Glitch effect for headings */
+@keyframes glitch-clip {
+    0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 0); }
+    20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, 0); }
+    40% { clip-path: inset(43% 0 1% 0); transform: translate(-2px, 0); }
+    60% { clip-path: inset(25% 0 58% 0); transform: translate(1px, 0); }
+    80% { clip-path: inset(54% 0 7% 0); transform: translate(-2px, 0); }
+    100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 0); }
+}
+
+@keyframes pulse-red {
+    0%, 100% { box-shadow: 0 0 20px rgba(225, 29, 72, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(225, 29, 72, 0.7), 0 0 60px rgba(225, 29, 72, 0.3); }
+}
+
+@keyframes scan-line {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+@keyframes flicker {
+    0%, 95%, 100% { opacity: 1; }
+    96% { opacity: 0.8; }
+    97% { opacity: 1; }
+    98% { opacity: 0.6; }
+    99% { opacity: 1; }
+}
+
+@keyframes float-up {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stamp-in {
+    0% { transform: scale(2) rotate(-15deg); opacity: 0; }
+    60% { transform: scale(0.95) rotate(2deg); opacity: 1; }
+    80% { transform: scale(1.02) rotate(-1deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes border-glow {
+    0%, 100% { border-color: rgba(225, 29, 72, 0.4); }
+    50% { border-color: rgba(225, 29, 72, 0.9); }
+}
+
+/* Scan line animation for gate scanner */
+.scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #10b981, transparent);
+    animation: scan-line 2s linear infinite;
+    box-shadow: 0 0 10px #10b981;
+}
+
+/* Glow effects */
+.glow-red {
+    animation: pulse-red 2s ease-in-out infinite;
+}
+
+.text-glow-red {
+    text-shadow: 0 0 20px rgba(225, 29, 72, 0.8);
+}
+
+.text-glow-green {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+}
+
+/* Ticket tear effect */
+.ticket-tear {
+    background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 7px,
+        rgba(255,255,255,0.1) 7px,
+        rgba(255,255,255,0.1) 8px
+    );
+}
+
+/* Halftone background */
+.halftone-bg {
+    background-image: radial-gradient(circle, rgba(225, 29, 72, 0.15) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Stamp animation */
+.stamp-animation {
+    animation: stamp-in 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Float up animation */
+.animate-float-up {
+    animation: float-up 0.8s ease-out both;
+}
+
+.animate-float-up-delay {
+    animation: float-up 0.8s ease-out 0.2s both;
+}
+
+.animate-float-up-delay-2 {
+    animation: float-up 0.8s ease-out 0.4s both;
+}
+
+/* Flicker text */
+.flicker {
+    animation: flicker 4s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e11d48;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9f1239;
+}
+
+/* Border glow animation */
+.border-glow-anim {
+    animation: border-glow 2s ease-in-out infinite;
+}
+
+/* Progress bar animation */
+@keyframes fill-progress {
+    from { width: 0; }
+}
+
+.progress-fill {
+    animation: fill-progress 1s ease-out both;
+}
